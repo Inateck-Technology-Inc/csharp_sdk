@@ -127,7 +127,7 @@ class Program
                     PrintInRed($"MacAddress is not assigned. Please use {CommandPrefix}setMac");
                     continue;
                 }
-                string settingInfo = Scanner.GetSettingInfo(MacAddress, DeviceType.ST21);
+                string settingInfo = Scanner.GetSettingInfo(MacAddress, DeviceType.ST42);
                 PrintInGreen("SettingInfo: " + settingInfo.Replace("},", "},\n"));
             }
             else if (command == "quiet")
@@ -138,7 +138,7 @@ class Program
                     continue;
                 }
                 string closeVolume = "[{\"flag\":1001,\"value\":0}]";
-                string info = Scanner.SetSettingInfo(MacAddress, closeVolume, DeviceType.ST21);
+                string info = Scanner.SetSettingInfo(MacAddress, closeVolume, DeviceType.ST42);
                 Scanner.BeeOrShake(MacAddress);
                 PrintInGreen("SettingInfo: " + info.Replace("},", "},\n"));
             }
@@ -150,7 +150,7 @@ class Program
                     continue;
                 }
                 string closeVolume = "[{\"flag\":1001,\"value\":4}]";
-                string info = Scanner.SetSettingInfo(MacAddress, closeVolume, DeviceType.ST21);
+                string info = Scanner.SetSettingInfo(MacAddress, closeVolume, DeviceType.ST42);
                 Scanner.BeeOrShake(MacAddress);
                 PrintInGreen("SettingInfo: " + info.Replace("},", "},\n"));
             }

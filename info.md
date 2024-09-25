@@ -1,4 +1,4 @@
-# 扫码枪配置 cmd
+# cmd
 
 ## Set Scanner Volume
 

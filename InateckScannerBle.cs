@@ -32,25 +32,29 @@ namespace InateckScannerBle
 
         }
 
-        public int RegisterEvent(Callback callback)
+        public string Init()
         {
-            int status = ScannerBleC.inateck_scanner_ble_init(callback);
-            return status;
+            return ScannerBleC.inateck_scanner_ble_init();
         }
 
-        public int Destroy()
+        public string SetDiscoverCallback(Callback callback)
         {
-            return ScannerBleC.inateck_scanner_ble_destroy();
+            return ScannerBleC.inateck_scanner_ble_set_discover_callback(callback);
         }
 
-        public int StartScan()
+        public string WaitAvailable()
         {
-            return ScannerBleC.inateck_scanner_ble_start_scan();
+            return ScannerBleC.inateck_scanner_ble_wait_available();
         }
 
-        public int StopScan()
+        public string StartScan()
         {
-            return ScannerBleC.inateck_scanner_ble_stop_scan();
+            return ScannerBleC.inateck_scanner_ble_start_discover();
+        }
+
+        public string StopScan()
+        {
+            return ScannerBleC.inateck_scanner_ble_stop_discover();
         }
 
         public string GetDevices()
@@ -58,17 +62,32 @@ namespace InateckScannerBle
             return ScannerBleC.inateck_scanner_ble_get_devices();
         }
 
-        public string Connect(string mac, Callback callback)
+        public string Connect(string mac)
         {
-            return ScannerBleC.inateck_scanner_ble_connect(mac, callback);
+            return ScannerBleC.inateck_scanner_ble_connect(mac);
         }
 
-        public int Auth(string mac)
+        public string CheckCommunication(string mac)
+        {
+            return ScannerBleC.inateck_scanner_ble_check_communication(mac);
+        }
+
+        public string Auth(string mac)
         {
             return ScannerBleC.inateck_scanner_ble_auth(mac);
         }
 
-        public int Disconnect(string mac)
+        public string setCodeCallback(string mac, Callback callback)
+        {
+            return ScannerBleC.inateck_scanner_ble_set_code_callback(mac, callback);
+        }
+
+        public string setDisconnectCallback(string mac, Callback callback)
+        {
+            return ScannerBleC.inateck_scanner_ble_set_disconnect_callback(mac, callback);
+        }
+
+        public string Disconnect(string mac)
         {
             return ScannerBleC.inateck_scanner_ble_disconnect(mac);
         }
@@ -103,52 +122,52 @@ namespace InateckScannerBle
             return ScannerBleC.inateck_scanner_ble_set_setting_info(mac, cmd, (int)deviceType);
         }
 
-        public int SetName(string mac, string name)
+        public string SetName(string mac, string name)
         {
             return ScannerBleC.inateck_scanner_ble_set_name(mac, name);
         }
 
-        public int SetTime(string mac, long time)
+        public string SetTime(string mac, long time)
         {
             return ScannerBleC.inateck_scanner_ble_set_time(mac, time);
         }
 
-        public int InventoryClearCache(string mac)
+        public string InventoryClearCache(string mac)
         {
             return ScannerBleC.inateck_scanner_ble_inventory_clear_cache(mac);
         }
 
-        public int InventoryUploadCache(string mac)
+        public string InventoryUploadCache(string mac)
         {
             return ScannerBleC.inateck_scanner_ble_inventory_upload_cache(mac);
         }
 
-        public int InventoryUploadCacheNumber(string mac)
+        public string InventoryUploadCacheNumber(string mac)
         {
             return ScannerBleC.inateck_scanner_ble_inventory_upload_cache_number(mac);
         }
 
-        public int Reset(string mac)
+        public string Reset(string mac)
         {
             return ScannerBleC.inateck_scanner_ble_reset(mac);
         }
 
-        public int Restart(string mac)
+        public string Restart(string mac)
         {
             return ScannerBleC.inateck_scanner_ble_restart(mac);
         }
 
-        public int CloseAllCode(string mac)
+        public string CloseAllCode(string mac)
         {
             return ScannerBleC.inateck_scanner_ble_close_all_code(mac);
         }
 
-        public int OpenAllCode(string mac)
+        public string OpenAllCode(string mac)
         {
             return ScannerBleC.inateck_scanner_ble_open_all_code(mac);
         }
 
-        public int ResetAllCode(string mac)
+        public string ResetAllCode(string mac)
         {
             return ScannerBleC.inateck_scanner_ble_reset_all_code(mac);
         }
@@ -160,90 +179,114 @@ namespace InateckScannerBle
 
         public string Debug(bool enable)
         {
-            return ScannerBleC.inateck_scanner_ble_debug(enable);
+            return ScannerBleC.inateck_scanner_ble_set_debug(enable);
         }
     }
 
     class ScannerBleC
     {
-        const string LibPath = "./lib/libscanner_ble_x86_64-apple-darwin.dylib";
+        const string LibPath = "./scanner_ble_x86_64-pc-windows-msvc.dll";
 
         [DllImport(LibPath)]
-        public static extern int inateck_scanner_ble_init(Callback callback);
+        public static extern string inateck_scanner_ble_init();
 
         [DllImport(LibPath)]
-        public static extern int inateck_scanner_ble_destroy();
+        public static extern string inateck_scanner_ble_set_discover_callback(Callback callback);
 
         [DllImport(LibPath)]
-        public static extern int inateck_scanner_ble_start_scan();
+        public static extern string inateck_scanner_ble_wait_available();
 
         [DllImport(LibPath)]
-        public static extern int inateck_scanner_ble_stop_scan();
+        public static extern string inateck_scanner_ble_start_discover();
+
+        [DllImport(LibPath)]
+        public static extern string inateck_scanner_ble_stop_discover();
 
         [DllImport(LibPath)]
         public static extern string inateck_scanner_ble_get_devices();
 
         [DllImport(LibPath)]
-        public static extern string inateck_scanner_ble_connect(string mac, Callback callback);
+        public static extern string inateck_scanner_ble_connect(string devideId);
 
         [DllImport(LibPath)]
-        public static extern int inateck_scanner_ble_auth(string mac);
+        public static extern string inateck_scanner_ble_check_communication(string devideId);
 
         [DllImport(LibPath)]
-        public static extern int inateck_scanner_ble_disconnect(string mac);
+        public static extern string inateck_scanner_ble_auth(string devideId);
 
         [DllImport(LibPath)]
-        public static extern string inateck_scanner_ble_get_battery(string mac);
+        public static extern string inateck_scanner_ble_set_code_callback(string devideId, Callback callback);
 
         [DllImport(LibPath)]
-        public static extern string inateck_scanner_ble_get_hardware_version(string mac);
+        public static extern string inateck_scanner_ble_set_disconnect_callback(string devideId, Callback callback);
 
         [DllImport(LibPath)]
-        public static extern string inateck_scanner_ble_bee_or_shake(string mac);
+        public static extern string inateck_scanner_ble_disconnect(string devideId);
 
         [DllImport(LibPath)]
-        public static extern string inateck_scanner_ble_get_software_version(string mac);
+        public static extern string inateck_scanner_ble_get_battery(string devideId);
 
         [DllImport(LibPath)]
-        public static extern string inateck_scanner_ble_get_setting_info(string mac, int deviceType);
+        public static extern string inateck_scanner_ble_get_hardware_version(string devideId);
 
         [DllImport(LibPath)]
-        public static extern string inateck_scanner_ble_set_setting_info(string mac, string cmd, int deviceType);
+        public static extern string inateck_scanner_ble_bee_or_shake(string devideId);
 
         [DllImport(LibPath)]
-        public static extern int inateck_scanner_ble_set_name(string mac, string name);
+        public static extern string inateck_scanner_set_bee(string devideId, int voiceTime, int silentTime, int count);
+
+       [DllImport(LibPath)]
+        public static extern string inateck_scanner_set_led(string devideId, int color, int lightTime, int darkTime, int count);
 
         [DllImport(LibPath)]
-        public static extern int inateck_scanner_ble_set_time(string mac, long time);
+        public static extern string inateck_scanner_ble_get_software_version(string devideId);
 
         [DllImport(LibPath)]
-        public static extern int inateck_scanner_ble_inventory_clear_cache(string mac);
+        public static extern string inateck_scanner_set_bee(string devideId);
 
         [DllImport(LibPath)]
-        public static extern int inateck_scanner_ble_inventory_upload_cache(string mac);
+        public static extern string inateck_scanner_set_led(string devideId);
 
         [DllImport(LibPath)]
-        public static extern int inateck_scanner_ble_inventory_upload_cache_number(string mac);
+        public static extern string inateck_scanner_ble_get_setting_info(string devideId, int deviceType);
 
         [DllImport(LibPath)]
-        public static extern int inateck_scanner_ble_reset(string mac);
+        public static extern string inateck_scanner_ble_set_setting_info(string devideId, string cmd, int deviceType);
 
         [DllImport(LibPath)]
-        public static extern int inateck_scanner_ble_restart(string mac);
+        public static extern string inateck_scanner_ble_set_name(string devideId, string name);
 
         [DllImport(LibPath)]
-        public static extern int inateck_scanner_ble_close_all_code(string mac);
+        public static extern string inateck_scanner_ble_set_time(string devideId, long time);
 
         [DllImport(LibPath)]
-        public static extern int inateck_scanner_ble_open_all_code(string mac);
+        public static extern string inateck_scanner_ble_inventory_clear_cache(string devideId);
 
         [DllImport(LibPath)]
-        public static extern int inateck_scanner_ble_reset_all_code(string mac);
+        public static extern string inateck_scanner_ble_inventory_upload_cache(string devideId);
+
+        [DllImport(LibPath)]
+        public static extern string inateck_scanner_ble_inventory_upload_cache_number(string devideId);
+
+        [DllImport(LibPath)]
+        public static extern string inateck_scanner_ble_reset(string devideId);
+
+        [DllImport(LibPath)]
+        public static extern string inateck_scanner_ble_restart(string devideId);
+
+        [DllImport(LibPath)]
+        public static extern string inateck_scanner_ble_close_all_code(string devideId);
+
+        [DllImport(LibPath)]
+        public static extern string inateck_scanner_ble_open_all_code(string devideId);
+
+        [DllImport(LibPath)]
+        public static extern string inateck_scanner_ble_reset_all_code(string devideId);
 
         [DllImport(LibPath)]
         public static extern string inateck_scanner_ble_sdk_version();
 
         [DllImport(LibPath)]
-        public static extern string inateck_scanner_ble_debug(bool enable);
+        public static extern string inateck_scanner_ble_set_debug(bool enable);
     }
 }

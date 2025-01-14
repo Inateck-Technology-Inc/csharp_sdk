@@ -23,7 +23,7 @@ class Program
         Console.WriteLine("SDK Version: " + sdkVersion);
         Console.WriteLine("MacAddress: " + MacAddress ?? "N/A");
         string initResult = Scanner.Init();
-        // json 解析 initResult
+        // json parse
         JObject initResultJson = JObject.Parse(initResult);
         int status = initResultJson["status"]?.ToObject<int>() ?? -1;
         if (status != 0)

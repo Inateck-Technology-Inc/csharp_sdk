@@ -185,7 +185,7 @@ namespace InateckScannerBle
 
     class ScannerBleC
     {
-        const string LibPath = "./scanner_ble_x86_64-pc-windows-msvc.dll";
+        const string LibPath = "./inateck_scanner_ble.dll";
 
         [DllImport(LibPath)]
         public static extern string inateck_scanner_ble_init();

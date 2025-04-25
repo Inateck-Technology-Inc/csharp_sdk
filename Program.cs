@@ -68,6 +68,10 @@ class Program
                 Console.WriteLine("Unable to extract code from json.");
             }
         });
+        Scanner.setDisconnectCallback(devideId, (message) =>
+        {
+            Console.WriteLine("Disconnect: ------ " + message);
+        });
     }
 
     static void GetHardwareVersion(string devideId)
@@ -109,7 +113,7 @@ class Program
         scan();
 
         // find device id
-        string deviceId = "BluetoothLE#BluetoothLEf4:4e:fc:89:ee:4a-aa:2b:00:03:95:83";
+        string deviceId = "BluetoothLE#BluetoothLEf4:4e:fc:89:ee:4a-ac:2b:00:03:95:83";
 
         connect(deviceId);
 
@@ -119,10 +123,10 @@ class Program
 
         GetSettingInfo(deviceId);
 
-        Quiet(deviceId);
+        // Quiet(deviceId);
         
         // sleep 5s
-        System.Threading.Thread.Sleep(5000);
+        System.Threading.Thread.Sleep(15000);
 
         Loud(deviceId);
     }

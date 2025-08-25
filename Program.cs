@@ -2,6 +2,9 @@
 using InateckScannerBle;
 using Newtonsoft.Json.Linq;
 
+// latest lib version:
+// https://github.com/Inateck-Technology-Inc/scanner_lib
+
 class Program
 {
     public const string CommandPrefix = "!";
@@ -123,8 +126,8 @@ class Program
 
         GetSettingInfo(deviceId);
 
-        // Quiet(deviceId);
-        
+        Quiet(deviceId);
+
         // sleep 5s
         System.Threading.Thread.Sleep(15000);
 

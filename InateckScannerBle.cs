@@ -4,7 +4,7 @@ namespace InateckScannerBle
 {
     public enum DeviceType
     {
-        None = 0,
+        None,
         Pro8,
         ST45,
         ST23,
@@ -21,6 +21,41 @@ namespace InateckScannerBle
         ST70,
         P6,
         ST35,
+        Pro8AI,
+        ST45AI,
+        ST23AI,
+        ST91AI,
+        ST42AI,
+        ST54AI,
+        ST55AI,
+        ST73AI,
+        ST75AI,
+        ST43AI,
+        P7AI,
+        ST21AI,
+        ST60AI,
+        ST70AI,
+        P6AI,
+        ST35AI,
+        ST46,
+        ST46AI,
+        ST72,
+        ST72AI,
+        ST75S,
+        ST75SAI,
+        ST36,
+        ST36AI,
+        ST61,
+        ST61AI,
+        ST47,
+        ST47AI,
+        PBS002,
+        PRO8SE,
+        PRO8SEAI,
+        ST49,
+        ST49AI,
+        B560B,
+        PBS005AI,
     }
 
     public delegate void Callback(string message);
@@ -127,9 +162,9 @@ namespace InateckScannerBle
             return ScannerBleC.inateck_scanner_ble_set_name(mac, name);
         }
 
-        public string SetTime(string mac, long time)
+        public string SetTime(string mac, int hour, int minute, int second, int year, int month, int day)
         {
-            return ScannerBleC.inateck_scanner_ble_set_time(mac, time);
+            return ScannerBleC.inateck_scanner_ble_set_time(mac, hour, minute, second, year, month, day);
         }
 
         public string InventoryClearCache(string mac)
@@ -172,6 +207,16 @@ namespace InateckScannerBle
             return ScannerBleC.inateck_scanner_ble_reset_all_code(mac);
         }
 
+        public string SendHidText(string text)
+        {
+            return ScannerBleC.inateck_scanner_ble_send_hid_text(text);
+        }
+
+        public string SetHidOutput(string mac, int outputType)
+        {
+            return ScannerBleC.inateck_scanner_ble_set_hid_output(mac, outputType);
+        }
+
         public string SdkVersion()
         {
             return ScannerBleC.inateck_scanner_ble_sdk_version();
@@ -185,7 +230,9 @@ namespace InateckScannerBle
 
     class ScannerBleC
     {
-        const string LibPath = "./inateck_scanner_ble.dll";
+        // latest lib version:
+        // https://github.com/Inateck-Technology-Inc/scanner_lib
+        const string LibPath = "./scanner_ble_x86_64-pc-windows-msvc.dll";
 
         [DllImport(LibPath)]
         public static extern string inateck_scanner_ble_init();
@@ -235,7 +282,7 @@ namespace InateckScannerBle
         [DllImport(LibPath)]
         public static extern string inateck_scanner_set_bee(string devideId, int voiceTime, int silentTime, int count);
 
-       [DllImport(LibPath)]
+        [DllImport(LibPath)]
         public static extern string inateck_scanner_set_led(string devideId, int color, int lightTime, int darkTime, int count);
 
         [DllImport(LibPath)]
@@ -257,7 +304,13 @@ namespace InateckScannerBle
         public static extern string inateck_scanner_ble_set_name(string devideId, string name);
 
         [DllImport(LibPath)]
-        public static extern string inateck_scanner_ble_set_time(string devideId, long time);
+        public static extern string inateck_scanner_ble_set_time(String device_id,
+                                         int hour,
+                                         int minute,
+                                         int second,
+                                         int year,
+                                         int month,
+                                         int day);
 
         [DllImport(LibPath)]
         public static extern string inateck_scanner_ble_inventory_clear_cache(string devideId);
@@ -288,5 +341,11 @@ namespace InateckScannerBle
 
         [DllImport(LibPath)]
         public static extern string inateck_scanner_ble_set_debug(bool enable);
+
+        [DllImport(LibPath)]
+        public static extern string inateck_scanner_ble_send_hid_text(string text);
+
+        [DllImport(LibPath)]
+        public static extern string inateck_scanner_ble_set_hid_output(string devideId, int outputType);
     }
 }
